@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sweet Envelope 💌</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background-color: #fff0f5;
+            text-align: center;
+        }
+
+        h1 {
+            color: #d14686;
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 250px;
+            height: 200px;
+            margin: 50px auto;
+            perspective: 1000px;
+        }
+
+        .envelope {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #ffcccc;
+            border: 2px solid #d46a6a;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: #ff9999;
+            border-bottom: 2px solid #d46a6a;
+            transform-origin: top;
+            transform: rotateX(0deg);
+            transition: transform 0.6s ease;
+            z-index: 2;
+        }
+
+        .envelope.open .flap {
+            transform: rotateX(-120deg);
+        }
+
+        .content {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.6s;
+        }
+
+        .envelope.open .content {
+            opacity: 1;
+        }
+
+        .message-text {
+            font-size: 16px;
+            color: #c71585;
+            margin-bottom: 8px;
+        }
+
+        .message-image {
+            max-width: 100%;
+            max-height: 100px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .btn {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #ff99cc;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #ff66b2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>💌 Open the Envelope</h1>
+
+    <div class="envelope-container">
+        <div class="envelope" id="envelope">
+            <div class="flap"></div>
+            <div class="content" id="content">
+                <div class="message-text" id="messageText">You are special 💖</div>
+                <img id="messageImage" class="message-image" src="Images/1.jpg" alt="Sweet Image">
+            </div>
+        </div>
+    </div>
+
+    <button class="btn" onclick="revealMessage()">Open</button>
+
+    <script>
+        const messages = [
+            "You're amazing just the way you are 💕",
+            "Your smile makes the world brighter 🌟",
+            "You're a beautiful soul inside and out 🌈"
+        ];
+
+        const images = [
+            "Images/1.jpg",
+            "Images/2.jpg",
+            "Images/3.jpg"
+        ];
+
+        let current = 0;
+        let isOpen = false;
+
+        function revealMessage() {
+            const envelope = document.getElementById('envelope');
+            const message = document.getElementById('messageText');
+            const image = document.getElementById('messageImage');
+
+            if (!isOpen) {
+                message.innerText = messages[current];
+                image.src = images[current];
+                envelope.classList.add('open');
+                isOpen = true;
+            } else {
+                // Close and prepare next
+                envelope.classList.remove('open');
+                isOpen = false;
+                current = (current + 1) % messages.length;
+
+                setTimeout(() => {
+                    message.innerText = messages[current];
+                    image.src = images[current];
+                    envelope.classList.add('open');
+                    isOpen = true;
+                }, 500);
+            }
+        }
+    </script>
+
+</body>
+</html>
