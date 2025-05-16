@@ -126,27 +126,26 @@
     }
 
     .final-message {
-  display: none;
-  font-size: 2em;
-  color: red;
-  text-align: center;
-  font-weight: bold;
-  max-width: 90%;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.1); /* Fully transparent background */
-  border-radius: 15px;
-  z-index: 3;
-  position: relative;
-  max-height: 400px; /* Set a max height to enable scrolling */
-  overflow-y: auto; /* Enable vertical scrolling */
-}
-
+      display: none;
+      font-size: 2em;
+      color: red;
+      text-align: center;
+      font-weight: bold;
+      max-width: 90%;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1); /* Fully transparent background */
+      border-radius: 15px;
+      z-index: 3;
+      position: relative;
+      max-height: 400px; /* Set a max height to enable scrolling */
+      overflow-y: auto; /* Enable vertical scrolling */
+    }
 
     .blurred-background {
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      filter: blur(5px);
+      filter: none; /* Initially, no blur */
       position: absolute;
       top: 0;
       left: 0;
@@ -154,7 +153,7 @@
       height: 100%;
       z-index: 0;
       display: block;
-      transition: background-image 1s ease;
+      transition: background-image 1s ease, filter 1s ease;
     }
 
     @media (max-width: 768px) {
@@ -241,11 +240,18 @@ Thank you for being the person I never knew I needed, and for making my world a 
       const blurredBackground = document.getElementById('blurredBackground');
       const header = document.getElementById('header');
 
-      // Set background image only on blurredBackground for the blur effect
-      blurredBackground.style.backgroundImage = `url('${images[current]}')`;
+      // Set background image and no blur effect for images 1-8
+      if (current < messages.length - 1) {
+        blurredBackground.style.filter = 'none'; // No blur for images 1-8
+        blurredBackground.style.backgroundImage = `url('${images[current]}')`;
 
-      // Also set clear image inside envelope
-      envelope.style.backgroundImage = `url('${images[current]}')`;
+        // Set clear background inside the envelope
+        envelope.style.backgroundImage = `url('${images[current]}')`;
+      } else {
+        // Apply blur only for the final image (Image 9)
+        blurredBackground.style.filter = 'blur(5px)';
+        blurredBackground.style.backgroundImage = `url('Images/9.jpg')`; // Final image to be blurred
+      }
 
       if (current < messages.length - 1) {
         if (!isOpen) {
@@ -270,10 +276,6 @@ Thank you for being the person I never knew I needed, and for making my world a 
         nextButton.style.display = 'none';
         header.style.display = 'none';
         finalMessage.style.display = 'block';
-
-       // Set final background blurred image to Images/9.jpg
-blurredBackground.style.backgroundImage = `url('Images/9.jpg')`;
-
       }
     }
   </script>
