@@ -9,22 +9,35 @@
       margin: 0;
       padding: 0;
       font-family: 'Comic Sans MS', cursive;
-      background-color: #fff0f5;
-      text-align: center;
       height: 100%;
-      overflow: hidden;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff0f5;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 1s ease;
     }
 
     h1 {
       color: #d14686;
-      margin-top: 20px;
+      margin: 10px 0;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 10px 20px;
+      border-radius: 10px;
     }
 
     .envelope-container {
       width: 300px;
       height: 250px;
-      margin: 20px auto;
       perspective: 1000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .envelope {
@@ -35,6 +48,8 @@
       border-radius: 15px;
       position: relative;
       overflow: hidden;
+      background-size: cover;
+      background-position: center;
     }
 
     .flap {
@@ -76,19 +91,13 @@
     }
 
     .message-text {
-      font-size: 1.2em;
-      color: #c71585;
+      font-size: 1.5em;
+      color: red;
       margin-bottom: 10px;
+      text-align: center;
       line-height: 1.4;
-    }
-
-    .message-image {
-      width: 100%;
-      height: auto;
-      max-height: 150px;
-      border-radius: 10px;
-      object-fit: contain;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 3;
+      font-weight: bold;
     }
 
     .btn {
@@ -105,19 +114,19 @@
       background-color: #ff66b2;
     }
 
-    /* ✅ MOBILE view - bigger envelope */
     @media (max-width: 768px) {
       .envelope-container {
-        width: 90vw;
-        height: 70vh;
+        width: 95vw;
+        height: 80vh;
+        margin: 2.5vh auto;
       }
 
       .message-text {
-        font-size: 1.5em;
+        font-size: 1.8em;
       }
 
-      .message-image {
-        max-height: 50%;
+      .content {
+        padding: 5%;
       }
     }
   </style>
@@ -130,8 +139,7 @@
     <div class="envelope" id="envelope">
       <div class="flap"></div>
       <div class="content" id="content">
-        <div class="message-text" id="messageText">Thinking of you 💖</div>
-        <img id="messageImage" class="message-image" src="Images/1.jpg" alt="Sweet Image">
+        <div class="message-text" id="messageText"></div>
       </div>
     </div>
   </div>
@@ -140,15 +148,16 @@
 
   <script>
     const messages = [
-      "I can't tell if I miss you, or just your smile 💭",
-      "Every time I think of you, I smile... and then overthink 💘",
-      "Do you feel it too, or is it just me over here blushing? 😳💓",
-      "You confuse me... but in the sweetest way possible 💫",
-      "Are you just being nice, or is there a secret in your heart too? 💌",
-      "Sometimes I think you're my favorite daydream 🌸",
-      "You must be magic... you’re always on my mind ✨",
-      "If this is a game, I hope it never ends 💕"
-    ];
+  "Why do you always pop into my mind... even when I'm not trying? 💭",
+  "I don’t know if I’m falling for you... or if I already did 💓",
+  "You confuse me in the cutest way... I smile without knowing why 😅💓",
+  "Talking to you makes my day better — even if I pretend it doesn't ☀️",
+  "Sometimes I wonder if you know how much I enjoy every little moment with you 🌷",
+  "It's strange... how someone can mean so much and not even realize it ✨",
+  "You're the reason my heart feels a little fuller and my smile a little bigger 😊",
+  "I think... maybe I like you more than I meant to 💖"
+];
+
 
     const images = [
       "Images/1.jpg",
@@ -167,11 +176,13 @@
     function revealMessage() {
       const envelope = document.getElementById('envelope');
       const message = document.getElementById('messageText');
-      const image = document.getElementById('messageImage');
+
+      // Show background image on body and envelope
+      document.body.style.backgroundImage = `url('${images[current]}')`;
+      envelope.style.backgroundImage = `url('${images[current]}')`;
 
       if (!isOpen) {
         message.innerText = messages[current];
-        image.src = images[current];
         envelope.classList.add('open');
         isOpen = true;
       } else {
@@ -181,7 +192,8 @@
 
         setTimeout(() => {
           message.innerText = messages[current];
-          image.src = images[current];
+          document.body.style.backgroundImage = `url('${images[current]}')`;
+          envelope.style.backgroundImage = `url('${images[current]}')`;
           envelope.classList.add('open');
           isOpen = true;
         }, 500);
