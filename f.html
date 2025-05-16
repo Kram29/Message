@@ -24,7 +24,7 @@
     }
 
     h2 {
-      font-size: 28px;
+      font-size: 32px; /* Slightly larger for better visibility */
       color: red;
       margin: 20px 0 10px;
       z-index: 2;
@@ -39,55 +39,37 @@
       border-radius: 10px;
       margin-bottom: 20px;
       z-index: 2;
+      font-size: 24px; /* Set font size here */
+      color: red; /* Text color */
     }
 
     .message {
-  font-size: 24px; /* Use a large consistent size */
-  color: red;
-  font-weight: bold;
-  line-height: 1.6;
-  white-space: normal;
-}
-
-
-    .heart {
-      position: absolute;
-      font-size: 30px;
-      color: #ff69b4;
-      animation: heartAnimation 4s infinite ease-in-out;
-      opacity: 0;
+      font-weight: bold;
+      line-height: 1.6;
+      white-space: normal;
     }
 
-    @keyframes heartAnimation {
-      0% {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-      }
-      50% {
-        opacity: 0.7;
-        transform: translate(var(--x-direction), var(--y-direction)) scale(1.5);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(var(--x-direction), var(--y-direction)) scale(2);
-      }
+    /* Style the typed letters */
+    .typed-letter {
+      font-size: 32px; /* Large font size */
+      font-weight: bold;
+      color: red;
+      white-space: normal;
     }
 
- .typed-letter {
-  font-size: 48px; /* or whatever size you want */
-  font-weight: bold;
-  color: red;
-}
+    @media (max-width: 600px) {
+      .typed-letter {
+        font-size: 32px; /* Keep it large even on mobile */
+      }
 
-@media (max-width: 600px) {
-  .typed-letter {
-    font-size: 40px; /* still big but mobile friendly */
-  }
-}
+      .message-container {
+        font-size: 32px; /* Keep the message container large */
+      }
 
-
-
-    
+      h2 {
+        font-size: 32px; /* Keep the heading big on mobile */
+      }
+    }
   </style>
 </head>
 <body>
@@ -133,23 +115,17 @@
       const message = "Hi maam ginawa ko to kasi di ko din alam hahah. Thank you kasi sa lahat ng inadd ko na ojt ikaw yung unang nag chat sakin :), pero sa lahat din ng ojt ikaw naiilang sakin charrot. Salamat sa egg kasi kung hndi dahil dun siguro d mo ako ichachat hahaha. Alam ko hindi naman importante sayo to, pero gnawa ko lng to para magpasalamat at malaman mo na napakabait at naappreciate kita ng sobra. Alam ko na minsan hndi kita napapansin kasi sobrang nagmamadali ka at alam mo ba pag hndi kita pinapansin gusto ko mauna ka muna mamansin hahaha kaso wala eh derederetso hahahah... Well malapit na kayo umalis hndi ko alam kung kelan ko to ibibigay sayo na link pra mabasa mo to siguro pag umalis kana sa casa or last day mo na. Kasi ayaw ko na mailang ka sakin lalo ngayon pa nga lang naiilang kana lalo pa pag nabasa mo na to. Alam ko hndi naman big deal sayo to maam pero mas gusto pa kita makilala:), and sana pag nabasa mo to wag moko iiwasan:) pero kung iwasan mo man okay lng ksi d nmn big deal yun sayo.. Thank you so much maam sa pagtyaga makichat sakin hahaha.. Thank you sa pagsusungit sa chat nga lang hahahah... Thank you sa pag iiwas sa personal i mean naiilang pala pero same lng yun hahaha .. Dahil sayo nawawala lungkot ko. Thank you at dumating ka nung time na punong puno ako ng kalungkutan at gusto ko na sumuko sa buahy.. hndi ko alam kung hanggang kelan mko mapag tyagaan hahahah.. Pero maam thank you po sa lahat.. Sana sa last day mo or bago ka umalis makasama mn lang kita na tayong dalawa lng at sana wala makaalam, ayaw ko magka issue hahahaha. Again maam thank you so much po take care always at kung bumalik ka na sainyo sana magkita pa tayo sa mga susunod na araw . Thank you so much and congrats ksi gagraduate kana. :*";
       let index = 0;
 
-  function typeMessage() {
-  if (index < message.length) {
-    const span = document.createElement('span');
-    span.textContent = message[index];
-
-    // Instead of inline style, use a class
-    span.className = 'typed-letter';
-    messageElement.appendChild(span);
-
-    index++;
-    messageElement.scrollTop = messageElement.scrollHeight;
-    setTimeout(typeMessage, 50);
-  }
-}
-
-
-
+      function typeMessage() {
+        if (index < message.length) {
+          const span = document.createElement('span');
+          span.textContent = message[index];
+          span.className = 'typed-letter'; // Apply the font size style here
+          messageElement.appendChild(span);
+          index++;
+          messageElement.scrollTop = messageElement.scrollHeight; // Auto-scroll to the bottom
+          setTimeout(typeMessage, 50);
+        }
+      }
 
       setTimeout(typeMessage, 1000);
     };
