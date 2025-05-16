@@ -19,7 +19,7 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      transition: background-image 1s ease;
+      overflow: hidden;
     }
 
     h1 {
@@ -29,6 +29,8 @@
       background: rgba(255, 255, 255, 0.6);
       padding: 10px 20px;
       border-radius: 10px;
+      position: relative;
+      z-index: 2;
     }
 
     .envelope-container {
@@ -38,6 +40,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      z-index: 2;
     }
 
     .envelope {
@@ -75,7 +79,7 @@
       top: 50%;
       left: 0;
       width: 100%;
-      height: 50%;
+      min-height: 50%;
       padding: 10px;
       box-sizing: border-box;
       opacity: 0;
@@ -84,6 +88,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      backdrop-filter: blur(6px);
     }
 
     .envelope.open .content {
@@ -91,13 +98,15 @@
     }
 
     .message-text {
-      font-size: 1.5em;
+      font-size: 1.3em;
       color: red;
       margin-bottom: 10px;
       text-align: center;
       line-height: 1.4;
       z-index: 3;
       font-weight: bold;
+      max-width: 90%;
+      word-wrap: break-word;
     }
 
     .btn {
@@ -108,10 +117,44 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
+      position: relative;
+      z-index: 2;
     }
 
     .btn:hover {
       background-color: #ff66b2;
+    }
+
+    .final-message {
+  display: none;
+  font-size: 2em;
+  color: red;
+  text-align: center;
+  font-weight: bold;
+  max-width: 90%;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1); /* Fully transparent background */
+  border-radius: 15px;
+  z-index: 3;
+  position: relative;
+  max-height: 400px; /* Set a max height to enable scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+
+    .blurred-background {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(5px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      display: block;
+      transition: background-image 1s ease;
     }
 
     @media (max-width: 768px) {
@@ -133,7 +176,9 @@
 </head>
 <body>
 
-  <h1>💌 What's in Your Heart?</h1>
+  <div class="blurred-background" id="blurredBackground"></div>
+
+  <h1 id="header">💌 What's in Your Heart?</h1>
 
   <div class="envelope-container">
     <div class="envelope" id="envelope">
@@ -144,20 +189,35 @@
     </div>
   </div>
 
-  <button class="btn" onclick="revealMessage()">Next 💗</button>
+  <button class="btn" id="nextButton" onclick="revealMessage()">Next 💗</button>
+
+  <div class="final-message" id="finalMessage">
+    "We met in the most unexpected way — because of an egg that broke. It was such a random, seemingly insignificant accident, but little did I know, that moment would mark the beginning of something so much bigger than I could have ever imagined.
+
+At first, I didn’t think much of it. It was just a mess, something we could laugh off. But as time passed, something started to change. Your presence, even in the simplest moments, began to matter more than I could admit to myself. The way you smiled at me, the way you’d crack a joke and make everyone around you laugh — it all started to feel like something I couldn’t get enough of.
+
+I kept pretending I wasn’t affected, but the truth is, every time you looked my way, every time our conversations lingered just a little longer than they needed to, my heart skipped a beat. And before I knew it, you had quietly, and without me realizing, become a part of my everyday thoughts.
+
+I never expected to feel this way, and I certainly never expected that a broken egg would lead me here — confessing things I’ve kept hidden. I like you. More than I probably should. And while I’m not entirely ready to jump into a relationship just yet, I want you to know how much I care. I want to get to know you better, to understand who you truly are, and to see where this might go — without rushing, without expectations.
+
+I’m scared, to be honest. Scared that putting my feelings into words might change everything, but more scared of not saying anything and letting this feeling slip away without you ever knowing.
+
+So here it is, the truth I’ve been keeping: You matter to me in ways I didn’t think was possible. Maybe this will never reach you, or maybe you’ll never feel the same, but I needed you to know. Because even if nothing changes, at least I’ll know I was honest with myself. And honest with you.
+
+Thank you for being the person I never knew I needed, and for making my world a little brighter — even in the simplest of moments. I never expected that something as small as a broken egg would lead me to this, but now that I’m here, I wouldn’t change a thing."
+  </div>
 
   <script>
     const messages = [
-  "Why do you always pop into my mind... even when I'm not trying? 💭",
-  "I don’t know if I’m falling for you... or if I already did 💓",
-  "You confuse me in the cutest way... I smile without knowing why 😅💓",
-  "Talking to you makes my day better — even if I pretend it doesn't ☀️",
-  "Sometimes I wonder if you know how much I enjoy every little moment with you 🌷",
-  "It's strange... how someone can mean so much and not even realize it ✨",
-  "You're the reason my heart feels a little fuller and my smile a little bigger 😊",
-  "I think... maybe I like you more than I meant to 💖"
-];
-
+      "Why do you always pop into my mind... even when I'm not trying? 💭",
+      "I don’t know if I’m falling for you... or if I already did 💓",
+      "You confuse me in the cutest way... I smile without knowing why 😅💓",
+      "Talking to you makes my day better — even if I pretend it doesn't ☀️",
+      "Sometimes I wonder if you know how much I enjoy every little moment with you 🌷",
+      "It's strange... how someone can mean so much and not even realize it ✨",
+      "You're the reason my heart feels a little fuller and my smile a little bigger 😊",
+      "I think... maybe I like you more than I meant to 💖"
+    ];
 
     const images = [
       "Images/1.jpg",
@@ -176,27 +236,44 @@
     function revealMessage() {
       const envelope = document.getElementById('envelope');
       const message = document.getElementById('messageText');
+      const finalMessage = document.getElementById('finalMessage');
+      const nextButton = document.getElementById('nextButton');
+      const blurredBackground = document.getElementById('blurredBackground');
+      const header = document.getElementById('header');
 
-      // Show background image on body and envelope
-      document.body.style.backgroundImage = `url('${images[current]}')`;
+      // Set background image only on blurredBackground for the blur effect
+      blurredBackground.style.backgroundImage = `url('${images[current]}')`;
+
+      // Also set clear image inside envelope
       envelope.style.backgroundImage = `url('${images[current]}')`;
 
-      if (!isOpen) {
-        message.innerText = messages[current];
-        envelope.classList.add('open');
-        isOpen = true;
-      } else {
-        envelope.classList.remove('open');
-        isOpen = false;
-        current = (current + 1) % messages.length;
-
-        setTimeout(() => {
+      if (current < messages.length - 1) {
+        if (!isOpen) {
           message.innerText = messages[current];
-          document.body.style.backgroundImage = `url('${images[current]}')`;
-          envelope.style.backgroundImage = `url('${images[current]}')`;
           envelope.classList.add('open');
           isOpen = true;
-        }, 500);
+        } else {
+          envelope.classList.remove('open');
+          isOpen = false;
+          current = (current + 1) % messages.length;
+
+          setTimeout(() => {
+            message.innerText = messages[current];
+            blurredBackground.style.backgroundImage = `url('${images[current]}')`;
+            envelope.style.backgroundImage = `url('${images[current]}')`;
+            envelope.classList.add('open');
+            isOpen = true;
+          }, 500);
+        }
+      } else {
+        envelope.style.display = 'none';
+        nextButton.style.display = 'none';
+        header.style.display = 'none';
+        finalMessage.style.display = 'block';
+
+       // Set final background blurred image to Images/9.jpg
+blurredBackground.style.backgroundImage = `url('Images/9.jpg')`;
+
       }
     }
   </script>
