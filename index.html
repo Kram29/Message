@@ -2,23 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sweet Envelope 💌</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      background-color: #fff0f5;
       font-family: 'Comic Sans MS', cursive;
+      background-color: #fff0f5;
+      text-align: center;
+      height: 100%;
       overflow: hidden;
     }
 
+    h1 {
+      color: #d14686;
+      margin-top: 20px;
+    }
+
     .envelope-container {
-      width: 100vw;
-      height: 100vh;
-      padding: 10px;
-      box-sizing: border-box;
+      width: 300px;
+      height: 250px;
+      margin: 20px auto;
       perspective: 1000px;
     }
 
@@ -56,7 +61,7 @@
       left: 0;
       width: 100%;
       height: 50%;
-      padding: 5%;
+      padding: 10px;
       box-sizing: border-box;
       opacity: 0;
       transition: opacity 0.4s ease 0.6s;
@@ -71,60 +76,55 @@
     }
 
     .message-text {
-      font-size: 1.8em;
+      font-size: 1.2em;
       color: #c71585;
-      text-align: center;
-      font-weight: bold;
-      line-height: 1.4;
       margin-bottom: 10px;
+      line-height: 1.4;
     }
 
     .message-image {
       width: 100%;
       height: auto;
-      max-height: 50%;
-      border-radius: 12px;
+      max-height: 150px;
+      border-radius: 10px;
       object-fit: contain;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .btn {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      margin-top: 20px;
       padding: 12px 24px;
       font-size: 18px;
       background-color: #ff99cc;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s;
-      z-index: 3;
     }
 
     .btn:hover {
       background-color: #ff66b2;
     }
 
-    .hearts {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 40px;
-      color: #ff69b4;
-      animation: floatUp 3s linear infinite;
-      z-index: 5;
-    }
+    /* ✅ MOBILE view - bigger envelope */
+    @media (max-width: 768px) {
+      .envelope-container {
+        width: 90vw;
+        height: 70vh;
+      }
 
-    @keyframes floatUp {
-      0% { transform: translate(-50%, 0); opacity: 1; }
-      100% { transform: translate(-50%, -300px); opacity: 0; }
+      .message-text {
+        font-size: 1.5em;
+      }
+
+      .message-image {
+        max-height: 50%;
+      }
     }
   </style>
 </head>
 <body>
+
+  <h1>💌 What's in Your Heart?</h1>
 
   <div class="envelope-container">
     <div class="envelope" id="envelope">
@@ -134,10 +134,9 @@
         <img id="messageImage" class="message-image" src="Images/1.jpg" alt="Sweet Image">
       </div>
     </div>
-    <button class="btn" onclick="revealMessage()">Next 💗</button>
   </div>
 
-  <div class="hearts" id="hearts" style="display: none;">💖💫💞</div>
+  <button class="btn" onclick="revealMessage()">Next 💗</button>
 
   <script>
     const messages = [
@@ -169,15 +168,12 @@
       const envelope = document.getElementById('envelope');
       const message = document.getElementById('messageText');
       const image = document.getElementById('messageImage');
-      const hearts = document.getElementById('hearts');
 
       if (!isOpen) {
         message.innerText = messages[current];
         image.src = images[current];
         envelope.classList.add('open');
         isOpen = true;
-        hearts.style.display = 'block';
-        setTimeout(() => hearts.style.display = 'none', 2000);
       } else {
         envelope.classList.remove('open');
         isOpen = false;
@@ -188,8 +184,6 @@
           image.src = images[current];
           envelope.classList.add('open');
           isOpen = true;
-          hearts.style.display = 'block';
-          setTimeout(() => hearts.style.display = 'none', 2000);
         }, 500);
       }
     }
