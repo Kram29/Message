@@ -73,15 +73,18 @@
       }
     }
 
-  @media (max-width: 600px) {
-  .message {
-    font-size: 50px; /* or 28px */
-  }
+ .typed-letter {
+  font-size: 48px; /* or whatever size you want */
+  font-weight: bold;
+  color: red;
+}
 
-  h2 {
-    font-size: 50px;
+@media (max-width: 600px) {
+  .typed-letter {
+    font-size: 40px; /* still big but mobile friendly */
   }
 }
+
 
 
     
@@ -134,16 +137,17 @@
   if (index < message.length) {
     const span = document.createElement('span');
     span.textContent = message[index];
-    span.style.fontSize = '50px'; // Or any size you want
-    span.style.color = 'red';     // Optional
-    span.style.fontWeight = 'bold'; // Optional
+
+    // Instead of inline style, use a class
+    span.className = 'typed-letter';
     messageElement.appendChild(span);
 
     index++;
-    messageElement.scrollTop = messageElement.scrollHeight; // auto-scroll
+    messageElement.scrollTop = messageElement.scrollHeight;
     setTimeout(typeMessage, 50);
   }
 }
+
 
 
 
