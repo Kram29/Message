@@ -42,12 +42,13 @@
     }
 
     .message {
-      font-size: 20px;
-      color: red;
-      font-weight: bold;
-      line-height: 1.6;
-      white-space: normal;
-    }
+  font-size: 24px; /* Use a large consistent size */
+  color: red;
+  font-weight: bold;
+  line-height: 1.6;
+  white-space: normal;
+}
+
 
     .heart {
       position: absolute;
@@ -72,15 +73,18 @@
       }
     }
 
-    @media (max-width: 600px) {
-      .message {
-        font-size: 100px;
-      }
+  @media (max-width: 600px) {
+  .message {
+    font-size: 24px; /* or 28px */
+  }
 
-      h2 {
-        font-size: 100px;
-      }
-    }
+  h2 {
+    font-size: 28px;
+  }
+}
+
+
+    
   </style>
 </head>
 <body>
@@ -127,12 +131,14 @@
       let index = 0;
 
       function typeMessage() {
-        if (index < message.length) {
-          messageElement.innerHTML += message[index];
-          index++;
-          setTimeout(typeMessage, 50);
-        }
-      }
+  if (index < message.length) {
+    messageElement.innerHTML += message[index];
+    index++;
+    messageElement.scrollTop = messageElement.scrollHeight; // auto-scroll
+    setTimeout(typeMessage, 50);
+  }
+}
+
 
       setTimeout(typeMessage, 1000);
     };
