@@ -12,12 +12,13 @@
 
         h1 {
             color: #d14686;
+            margin-top: 40px;
         }
 
         .envelope-container {
             position: relative;
-            width: 250px;
-            height: 200px;
+            width: 300px;
+            height: 280px;
             margin: 50px auto;
             perspective: 1000px;
         }
@@ -55,8 +56,11 @@
             top: 50px;
             left: 0;
             width: 100%;
+            height: calc(100% - 50px);
             padding: 10px;
+            box-sizing: border-box;
             opacity: 0;
+            overflow-y: auto;
             transition: opacity 0.4s ease 0.6s;
         }
 
@@ -65,90 +69,126 @@
         }
 
         .message-text {
-            font-size: 16px;
+            font-size: 18px;
             color: #c71585;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            line-height: 1.4;
         }
 
         .message-image {
-            max-width: 100%;
-            max-height: 100px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            width: 100%;
+            height: auto;
+            max-height: 160px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
         }
 
         .btn {
             margin-top: 30px;
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 18px;
             background-color: #ff99cc;
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .btn:hover {
             background-color: #ff66b2;
         }
+
+        .hearts {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            color: #ff69b4;
+            animation: floatUp 3s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translate(-50%, 0); opacity: 1; }
+            100% { transform: translate(-50%, -300px); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <h1>💌 Open the Envelope</h1>
+<h1>💌 What's in Your Heart?</h1>
 
-    <div class="envelope-container">
-        <div class="envelope" id="envelope">
-            <div class="flap"></div>
-            <div class="content" id="content">
-                <div class="message-text" id="messageText">You are special 💖</div>
-                <img id="messageImage" class="message-image" src="Images/1.jpg" alt="Sweet Image">
-            </div>
+<div class="envelope-container">
+    <div class="envelope" id="envelope">
+        <div class="flap"></div>
+        <div class="content" id="content">
+            <div class="message-text" id="messageText">Thinking of you 💖</div>
+            <img id="messageImage" class="message-image" src="Images/1.jpg" alt="Sweet Image">
         </div>
     </div>
+</div>
 
-    <button class="btn" onclick="revealMessage()">Open</button>
+<button class="btn" onclick="revealMessage()">Next 💗</button>
 
-    <script>
-        const messages = [
-            "You're amazing just the way you are 💕",
-            "Your smile makes the world brighter 🌟",
-            "You're a beautiful soul inside and out 🌈"
-        ];
+<div class="hearts" id="hearts" style="display: none;">💖💫💞</div>
 
-        const images = [
-            "Images/1.jpg",
-            "Images/2.jpg",
-            "Images/3.jpg"
-        ];
+<script>
+    const messages = [
+        "I can't tell if I miss you, or just your smile 💭",
+        "Every time I think of you, I smile... and then overthink 💘",
+        "Do you feel it too, or is it just me over here blushing? 😳💓",
+        "You confuse me... but in the sweetest way possible 💫",
+        "Are you just being nice, or is there a secret in your heart too? 💌",
+        "Sometimes I think you're my favorite daydream 🌸",
+        "You must be magic... you’re always on my mind ✨",
+        "If this is a game, I hope it never ends 💕"
+    ];
 
-        let current = 0;
-        let isOpen = false;
+    const images = [
+        "Images/1.jpg",
+        "Images/2.jpg",
+        "Images/3.jpg",
+        "Images/4.jpg",
+        "Images/5.jpg",
+        "Images/6.jpg",
+        "Images/7.jpg",
+        "Images/8.jpg"
+    ];
 
-        function revealMessage() {
-            const envelope = document.getElementById('envelope');
-            const message = document.getElementById('messageText');
-            const image = document.getElementById('messageImage');
+    let current = 0;
+    let isOpen = false;
 
-            if (!isOpen) {
+    function revealMessage() {
+        const envelope = document.getElementById('envelope');
+        const message = document.getElementById('messageText');
+        const image = document.getElementById('messageImage');
+        const hearts = document.getElementById('hearts');
+
+        if (!isOpen) {
+            message.innerText = messages[current];
+            image.src = images[current];
+            envelope.classList.add('open');
+            isOpen = true;
+            hearts.style.display = 'block';
+            setTimeout(() => hearts.style.display = 'none', 2000);
+        } else {
+            envelope.classList.remove('open');
+            isOpen = false;
+            current = (current + 1) % messages.length;
+
+            setTimeout(() => {
                 message.innerText = messages[current];
                 image.src = images[current];
                 envelope.classList.add('open');
                 isOpen = true;
-            } else {
-                // Close and prepare next
-                envelope.classList.remove('open');
-                isOpen = false;
-                current = (current + 1) % messages.length;
-
-                setTimeout(() => {
-                    message.innerText = messages[current];
-                    image.src = images[current];
-                    envelope.classList.add('open');
-                    isOpen = true;
-                }, 500);
-            }
+                hearts.style.display = 'block';
+                setTimeout(() => hearts.style.display = 'none', 2000);
+            }, 500);
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>
